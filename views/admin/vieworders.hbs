@@ -1,0 +1,45 @@
+<section>
+    <div class="container">
+        <div class="row mt-4">
+            <a href=""></a>
+        </div>
+        <table class="table table-hover mt-5">
+            <h2> All Orders</h2>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Total Amount</th>
+                    <th scope="col">Payment</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Products</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <td>{{@index}}</td>
+                    <td>{{this.date}}</td>
+                    <td>{{this.address.[0].shippingAddress.first_name}}</td>
+                    <td>{{this.address.[0].shippingAddress.first_name}} <br>
+                        {{this.address.[0].shippingAddress.address}}
+                        
+                    </td>
+                    <td>₹ {{this.TotalAmount}}</td>
+                    <td>{{this.paymentMethod}}</td>
+                    <td>{{this.status}}</td>
+
+                    <td>
+                        <a href="/admin/view-allOrder-all-user-products?id={{_id}}&userId={{userId}}"
+                            class="btn btn-success">View Products</a>
+                    </td>
+
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</section>

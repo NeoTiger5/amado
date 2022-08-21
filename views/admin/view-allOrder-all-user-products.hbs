@@ -1,0 +1,67 @@
+{{#each products}}
+<section class="product-details p-5">
+    <center>
+        <div>
+            <h4>ORDER DETAILS</h4>
+        </div><br>
+    </center>
+    <div class="container ">
+        <div class="row ">
+
+            <div class="col-lg-6 ">
+
+                <div class="product_details_pic">
+                    <div class="product_detailspicleft product_thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img style="height:580px ; width: 520px; ;" src="/product-image/{{this.product._id}}.jpg"
+                                alt="">
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 ">
+
+                <div class="product_details_text">
+                    <h3>{{this.product.name}}</h3>
+
+                    <div class="product_details_price"> Price :₹ {{this.product.price}}</div>
+                    <h5> Quantity : {{this.products.quantity}}</h5><br>
+                        <h5> Payment Method : {{this.paymentMethod}}</h5><br>
+                            <div class="product_details_price">
+                                <h5>Delivery Status :</h5>
+
+
+                                 <select name="forma" onchange="location=this.value" class="form-select" aria-label="Default select example">
+                                <option selected>{{this.status}}</option>
+                               <option value="/admin/change-status/?id={{this._id}}&&status=Pending">Pending</option>
+                               <option value="/admin/change-status/?id={{this._id}}&&status=Placed">Placed</option>
+                               <option value="/admin/change-status/?id={{this._id}}&&status=Shipped">Shipped</option>
+                               <option value="/admin/change-status/?id={{this._id}}&&status=Delivered">Delivered</option>
+                               <option value="/admin/change-status/?id={{this._id}}&&status=Cancel">Cancel</option>
+                                
+                            </select>
+                            </div><br>
+                           
+
+                            <h4>Delivery Address</h4><br>
+                            <h6>First Name : {{this.address.shippingAddress.first_name}}</h6>
+                            <h6>Last Name : {{this.address.shippingAddress.last_name}}</h6>
+                            <h6> Address : {{this.address.shippingAddress.address}}</h6>
+                            <h6>Phone No: {{this.address.shippingAddress.phone_number}}</h6>
+                            <h6> pincode : {{this.address.shippingAddress.zipcode}}</h6>
+                            <h6> City : {{this.address.shippingAddress.city}}</h6>
+                            <h6> State : {{this.address.shippingAddress.state}}</h6>
+                            <h6> Date : {{this.date}}</h6>
+
+                </div>
+
+            </div>
+
+        </div>
+
+</section>
+{{/each}}
+</div>

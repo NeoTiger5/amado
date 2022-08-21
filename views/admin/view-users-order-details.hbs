@@ -1,0 +1,173 @@
+{{#each products}}
+<section class="product-details p-5">
+    <center>
+        <div><h3>Order Details</h3></div><br>
+    </center>
+    <div class="container ">
+        <div class="row ">
+
+            <div class="col-lg-6 ">
+
+                <div class="product_details_pic">
+                    <div class="product_detailspicleft product_thumb nice-scroll">
+                        <a class="pt active" href="#product-1">
+                            <img style="height:600px ; width: 520px; ;" src="/product-image/{{this.orders._id}}.jpg"
+                                alt="">
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-6 ">
+
+                <div class="product_details_text">
+                    <h3>{{this.orders.name}}</h3>
+                    {{!-- <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <span>( 138 reviews )</span>
+                    </div> --}}
+
+                    <div class="product_details_price"> Price :₹ {{this.orders.price}}</div>
+                    <h4> Quantity : {{this.products.quantity}}</h5><br>
+                        <h4> Payment Method : {{this.paymentMethod}}</h5><br>
+                            <div class="product_details_status"><h4>Delivery Status : </h4>{{this.Status}}</div>
+
+                             <ol class="progtrckr" data-progtrckr-steps="4">
+                                  {{#if this.Pending}}
+                                
+                                <li class="progtrckr-done">Pending</li>
+
+                                <li class="progtrckr-todo">Placed</li>                              
+                                
+                                <li class="progtrckr-todo">Shipped</li>
+                                
+                                <li class="progtrckr-todo">Delivered</li>
+                                {{/if}}
+                               
+                                {{#if this.Placed}}
+                                
+                                <li class="progtrckr-done">Pending</li>
+
+                                <li class="progtrckr-done">Placed</li>
+                                                             
+                                <li class="progtrckr-todo">Shipped</li>
+                                
+                                <li class="progtrckr-todo">Delivered</li>
+                                {{/if}}
+                                {{#if this.Shipped}}
+                                
+                                <li class="progtrckr-done">Pending</li>
+
+                                <li class="progtrckr-done">Placed</li>
+                                                           
+                                <li class="progtrckr-done">Shipped</li>
+                                
+                                <li class="progtrckr-todo">Delivered</li>
+                                {{/if}}
+                                {{#if this.Delivered}}
+                                
+                                <li class="progtrckr-done">Pending</li>
+
+                                <li class="progtrckr-done">Placed</li>
+                                                              
+                                <li class="progtrckr-done">Shipped</li>
+                                
+                                <li class="progtrckr-done">Delivered</li>
+                                {{/if}}
+                                {{#if this.Cancel}}
+                                
+                                <h3>Cancel</h3>
+                                {{/if}}
+                                
+                            </ol> <br>
+                            <h4>Delivery Address</h4><br>
+
+                            <h6> Name : {{this.address.first_name}}</h6>
+                            <h6> Name : {{this.address.last_name}}</h6>
+                            <h6> Address : {{this.address.address}}</h6>
+                            <h6>Phone No: {{this.address.phone_number}}</h6>
+                            <h6> pincode : {{this.address.zipcode}}</h6>
+                            <h6> City : {{this.address.city}}</h6>
+                            <h6> State : {{this.address.state}}</h6>
+                            <h6> Date : {{this.date}}</h6>
+
+                </div>
+
+            </div>
+
+        </div>
+
+</section>
+{{/each}}
+</div>
+
+
+
+<style>
+
+    ol.progtrckr {
+    margin: 0;
+    padding: 0;
+    list-style-type none;
+}
+
+ol.progtrckr li {
+    display: inline-block;
+    text-align: center;
+    line-height: 3.5em;
+}
+
+ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
+ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
+ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
+ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
+ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
+ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
+ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
+ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+
+ol.progtrckr li.progtrckr-done {
+    color: rgb(72, 0, 255);
+    border-bottom: 4px solid yellowgreen;
+}
+ol.progtrckr li.progtrckr-todo {
+    color: silver; 
+    border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li:after {
+    content: "\00a0\00a0";
+}
+ol.progtrckr li:before {
+    position: relative;
+    bottom: -2.5em;
+    float: left;
+    left: 50%;
+    line-height: 1em;
+}
+ol.progtrckr li.progtrckr-done:before {
+    content: "\2713";
+    color: white;
+    background-color: yellowgreen;
+    height: 2.2em;
+    width: 2.2em;
+    line-height: 2.2em;
+    border: none;
+    border-radius: 2.2em;
+}
+ol.progtrckr li.progtrckr-todo:before {
+    content: "\039F";
+    color: silver;
+    background-color: white;
+    font-size: 2.2em;
+    bottom: -1.2em;
+}
+
+
+</style>

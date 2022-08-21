@@ -1,0 +1,52 @@
+{{#if wishCount}}
+<div class="container " id="reload-section">
+
+  <div class="name" style=" padding-top: 30px;">
+    <h1>Wishlist</h1>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-7" style="margin-top: 60px;">
+
+    {{#each wishProd}}
+    <div class="card " style=" width: 18rem;height: 30rem;margin-right: 50px;">
+
+      <img src="/product-image/{{this.product._id}}.jpg" style="height: 400px;" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{this.product.name}}</h5>
+        <p>₹ {{this.product.price}}</p>
+        <button onclick="addToCart('{{this.product._id}}')" name="addtocart" class="btn btn-success">Add to
+          cart</button>
+        <button onclick="remove('{{this._id}}','{{this.product._id}}')" 
+          class="btn btn-danger">Delete</button>
+      </div>
+
+    </div>
+    {{/each}}
+
+
+
+  </div>
+</div>
+</div>
+{{else}}
+<img src="https://img.freepik.com/free-vector/empty-concept-illustration_114360-1188.jpg?w=740&t=st=1660582220~exp=1660582820~hmac=50d0320a509c53c596fcd90bbd220d563d0b87232aed7227514967acb4fe6fe1" alt="">
+{{/if}}
+</div>
+<script>
+  function remove(wishId,productId) {
+    console.log(wishId)
+    console.log(productId)
+    $.ajax({
+      url: '/removeProductFromWishlist',
+      data: {
+        wishId: wishId,
+        productId: productId
+      },
+      method: 'post',
+      success: (response) => {
+        location.reload()
+        alert('success')
+        $('#reload-section').load(location.href + '#reload-section')
+      }
+    })
+  }
+</script>

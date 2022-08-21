@@ -1,0 +1,41 @@
+[
+  {
+    '$match': {
+      '_id': new ObjectId('62f9d6d9efc843eb5212022a')
+    }
+  }, {
+    '$unwind': {
+      'path': '$products'
+    }
+  }, {
+    '$unwind': {
+      'path': '$address'
+    }
+  }, {
+    '$lookup': {
+      'from': 'products', 
+      'localField': 'products.item', 
+      'foreignField': '_id', 
+      'as': 'orders'
+    }
+  }, {
+    '$unwind': {
+      'path': '$orders'
+    }
+  }, {
+    '$match': {
+      'orders._id': new ObjectId('62d916f132bf5eaeef87d31e')
+    }
+  }, {
+    '$project': {
+      '_id': 1, 
+      'userId': 1, 
+      'paymentMethod': 1, 
+      'TotalAmount': 1, 
+      'date': 1, 
+      'status': 1, 
+      'orders': 1, 
+      'address': 1
+    }
+  }
+]

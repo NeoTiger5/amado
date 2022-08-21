@@ -1,0 +1,44 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <a href="/admin/addproducts" class="btn btn-success">Add Products</a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Title</th>
+          <th scope="col">Price</th>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+          <th scope="col">Options</th>
+
+
+        </tr>
+      </thead>
+      {{#each product}}
+      <tbody>
+        <tr>
+
+          <td scope="row">{{@index}}</td>
+          <td>{{this.name}}</td>
+          <td>${{this.price}}</td>
+          <td>{{this.category}}</td>
+          <td>{{this.description}}</td>
+          <td><img style="width: 50px;height:50px" src="/product-image/{{this._id}}.jpg" alt=""></td>
+          <td>
+            <a href="/admin/editproducts/{{this._id}}" class="btn btn-primary">Edit</a>
+            <a href="/admin/deleteproducts/{{this._id}}" class="btn btn-danger"
+              onclick="return confirm('Confirm to delete {{this.name}} ?')">Delete</a>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+      {{/each}}
+    </table>
+  </div>
+
+</section>

@@ -1,0 +1,97 @@
+<div class="shop_sidebar_area">
+    <!-- ##### Single Widget ##### -->
+    <div class="widget catagory mb-50">
+        <!-- Widget Title -->
+        <h6 class="widget-title mb-30">Catagories</h6>
+
+        <!--  Catagories  -->
+        {{#each category}}
+        <div class="catagories-menu">
+            <ul>
+                <li class="active"><a href="/view-category/?category={{this.category}}">{{this.category}}</a></li>
+
+            </ul>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<div class="amado_product_area section-padding-100">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="product-topbar d-xl-flex align-items-end justify-content-between">
+                    <!-- Total Products -->
+                    <div class="total-products">
+                        <p>Showing 1-8 0f 25</p>
+                        <div class="view d-flex">
+                            <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{#each singleCategory}}
+            <!-- Single Product Area -->
+            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                <div class="single-product-wrapper">
+                    <div class="content">
+
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <a href="/product-details?id={{this._id}}">
+                                <img style="height:400px ;width:500px" src="/product-image/{{this._id}}.jpg " alt="">
+                            </a>
+
+                            {{!--
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="user/img/product-img/product2.jpg" alt=""> --}}
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description d-flex align-items-center justify-content-between">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price">₹ {{this.price}}</p>
+                                <a href="product-details.html">
+                                    <h6>{{this.name}}</h6>
+                                </a>
+                            </div>
+                            
+                            <!-- Ratings & Cart -->
+                            <div class="ratings-cart text-right">
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                                <div class="cart d-flex ">
+
+                                    <div style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"
+                                        name="addtowishlist" class="px-3">
+                                        <h4> <i class="bi bi-heart"></i></h4>
+                                    </div>
+
+
+                                    <div style="cursor: pointer;" onclick="addToCart('{{this._id}}')" name="addtocart">
+                                        <h3><i class="bi bi-cart-fill"></i></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    </div>
+    
+
+</div>

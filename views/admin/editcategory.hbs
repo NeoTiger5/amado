@@ -1,0 +1,16 @@
+<section>
+    <div="container mt-4 ">
+        <div class=" row ml-4">
+        <div class="col-md-6 ml-4">
+            <h2 class="text-center">Edit Category</h2>
+            <form action="/admin/editcategory/{{category._id}}" method="POST" enctype="multipart/form-data">
+                
+                <label for="">Category </label>
+                <input type="text" name="category" class="form-control" value="{{category.category}}">
+
+                <button type="submit" class="btn btn-success mt-4">Submit</button>
+            </form>
+        </div>
+        </div>
+        </div>
+</section>

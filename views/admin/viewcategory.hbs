@@ -1,0 +1,58 @@
+<section>
+  <div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+      <h2 class="mb-4">Category</h2>
+      <div class="table-responsive">
+
+        <a href="/admin/addcategory" class="btn btn-success">Add Category</a>
+
+        <table class="table" id="categoryTable">
+          <thead>
+            <tr>
+              <th scope="col">NO.</th>
+              <th scope="col">Category</th>
+              <th scope="col">Option</th>
+            
+            </tr>
+          </thead>
+          {{#each category}}
+          <tbody>
+            <tr>
+              <td scope="row">{{@index}}</td>
+              <td>{{this.category}}</td>
+              <td>
+                <a href="/admin/editcategory/{{this._id}}" class="btn btn-primary">Edit</a>
+                <a href="/admin/deletecategory/{{this._id}}" class="btn btn-danger"
+                  onclick="return confirm('Confirm to delete {{this.name}} ?')">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+ 
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#categoryTable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#categoryTable').DataTable();
+</script>
+

@@ -1,0 +1,61 @@
+[
+  {
+    '$match': {
+      '_id': new ObjectId('62fdcc2d7699b0fa859619b4')
+    }
+  }, {
+    '$match': {
+      'userId': new ObjectId('62d14d9fdbb7b9e38ed9ad30')
+    }
+  }, {
+    '$unwind': {
+      'path': '$address'
+    }
+  }, {
+    '$unwind': {
+      'path': '$products'
+    }
+  }, {
+    '$lookup': {
+      'from': 'user', 
+      'localField': 'userId', 
+      'foreignField': '_id', 
+      'as': 'user'
+    }
+  }, {
+    '$unwind': {
+      'path': '$user'
+    }
+  }, {
+    '$project': {
+      'products.item': 1, 
+      'products.quantity': 1, 
+      'address': 1, 
+      'TotalAmount': 1, 
+      'user': 1, 
+      'date': 1, 
+      'status': 1
+    }
+  }, {
+    '$lookup': {
+      'from': 'products', 
+      'localField': 'products.item', 
+      'foreignField': '_id', 
+      'as': 'product'
+    }
+  }, {
+    '$unwind': {
+      'path': '$product'
+    }
+  }, {
+    '$project': {
+      'user': 1, 
+      'address': 1, 
+      'paymentMethod': 1, 
+      'TotalAmount': 1, 
+      'date': 1, 
+      'product': 1, 
+      'status': 1
+    }
+  }
+]
