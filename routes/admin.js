@@ -16,7 +16,7 @@ router.get('/', function (req, res,next) {
     let admin = req.session.admin
     res.redirect('/admin/index')
   } else {
-    res.render('admin/login', { layout: 'admin-layout' });
+    res.render('admin/login', {layout: 'admin-layout' });
   }
  }catch(error){
   next(error)
@@ -26,6 +26,7 @@ router.get('/', function (req, res,next) {
 /* POST admin login  */
 router.post('/login', (req, res,next) => {
   try{
+    
     adminHelpers.doLogin(req.body).then((data) => {
       if (data.status) {
         req.session.logIn = true
@@ -96,7 +97,7 @@ router.post('/addproducts', (req, res,next) => {
 // view products
 router.get('/viewproducts', (req, res,next) => {
  try{
-  productHelpers.getAllProducts().then((product) => {
+  productHelpers.getAllProductsShop().then((product) => {
     res.render('admin/viewproducts', { layout: 'admin-layout', product })
   })
  }catch(error){

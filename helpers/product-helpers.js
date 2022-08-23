@@ -8,7 +8,12 @@ module.exports={
 //add products    
     addproducts:(products)=>{
         return new Promise((resolve,reject)=>{
-            db.get().collection(collection.PRODUCT_COLLECTION).insertOne(products).then((data)=>{
+            db.get().collection(collection.PRODUCT_COLLECTION).insertOne({
+                name:products.name,
+                price:parseInt(products.price),
+                description:products.description,
+                category:products.category
+            }).then((data)=>{
             resolve(data.insertedId)
             })
         })

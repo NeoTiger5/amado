@@ -10,8 +10,9 @@ module.exports = {
             let loginStatus = false
             let response = {}
             let admin = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ email: adminData.email })
+           
             if (admin) {
-                bycrpt.compare(adminData.password, admin.password).then((status) => {
+                bycrpt.compare(adminData.password,admin.password).then((status) => {
                     if (status) {
                         console.log('login suxccss 11');
                         response.status = true
