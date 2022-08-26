@@ -95,7 +95,7 @@ router.post('/otp', (req, res, next) => {
   try {
     twilioHelpers.otpVerify(req.body, req.session.body).then(() => {
       userHelpers.doSignup(req.session.body).then((Response) => {
-       
+
         if (Response) {
           res.redirect('/login')
         } else {
@@ -167,7 +167,7 @@ router.get('/view-category', verifyLogin, async (req, res, next) => {
       singleCategory = await catagoryHelpers.getSingleCategory(req.query.category)
       cartCount = await userHelpers.getCartCount(req.session.user._id)
       wishCount = await userHelpers.getWishCount(user._id)
-      console.log(singleCategory);
+    
       res.render('user/view-category', { user, category, cartCount, wishCount, singleCategory, layout: 'user-layout' })
     })
   } catch (error) {
@@ -217,7 +217,7 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
 
 router.get('/add-to-cart/:id', (req, res, next) => {
   try {
-   
+
     let user = req.session.user
     userHelpers.addToCart(req.params.id, user._id)
     res.json({ status: true })
@@ -257,7 +257,7 @@ router.get('/wishlist', verifyLogin, async (req, res, next) => {
 router.get('/add-to-wishlist/:id', (req, res, next) => {
 
   try {
-    console.log('api call wishlist');
+    
     let user = req.session.user
     userHelpers.addToWishlist(req.params.id, user._id)
     res.json({ status: true })
@@ -270,7 +270,7 @@ router.get('/add-to-wishlist/:id', (req, res, next) => {
 
 
 
-// remove product from whishlist
+// remove product from wishlist
 router.post('/removeProductFromWishlist', (req, res, next) => {
   try {
     userHelpers.removeFromWishlist(req.body).then(() => {
@@ -314,132 +314,167 @@ router.get('/place-order', verifyLogin, async (req, res, next) => {
 
 // add address
 
-router.get('/add-address', verifyLogin, (req, res,next) => {
- try {
-   res.render('user/add-address', { layout: 'user-layout' })
- } catch (error) {
-  next(erro)
- }
+router.get('/add-address', verifyLogin, async (req, res, next) => {
+  try {
+    let user = req.session.user
+    let users = user._id
+    let cartCount = await userHelpers.getCartCount(user._id)
+    let wishCount = await userHelpers.getWishCount(user._id)
+    res.render('user/add-address', { users, user, cartCount, wishCount, layout: 'user-layout' })
+  } catch (error) {
+    next(error)
+  }
 })
 
 
 //add address post
-router.post('/add-address', (req, res,next) => {
- try {
-   let user = req.session.user
-   userHelpers.addAddress(req.body, user._id).then(() => {
-     res.redirect('/place-order')
-   })
- } catch (error) {
-  next(error)
- }
+router.post('/add-address', (req, res, next) => {
+  try {
+    let user = req.session.user
+    userHelpers.addAddress(req.body, user._id).then(() => {
+      res.redirect('/place-order')
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 // place order post
-router.post('/place-order', async (req, res,next) => {
- try {
-   let user = req.session.user
-   let address = await userHelpers.fetchAddress(user._id, req.body.address)
-   let products = await userHelpers.getCartProductList(user._id)
-   let totalPrice = await userHelpers.getTotalAmount(user._id)
-   userHelpers.placeOrder(req.body, products, totalPrice, address, user._id).then((orderId) => {
- 
-     if (req.body['payment-method'] === 'COD') {
-       res.json({ codSuccess: true })
-     } else {
-       userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
-         res.json(response)
-       })
-     }
-   })
- 
- } catch (error) {
-  next(error)
- }
+router.post('/place-order', async (req, res, next) => {
+  try {
+    let user = req.session.user
+    let address = await userHelpers.fetchAddress(user._id, req.body.address)
+    let products = await userHelpers.getCartProductList(user._id)
+    let totalPrice = await userHelpers.getTotalAmount(user._id)
+    let discountData = null;
+    if (req.body.Coupon_Code) {
+      await userHelpers.checkCoupon(req.body.Coupon_Code, totalPrice).then((response) => {
+          discountData = response;
+        })
+        
+        .catch(() => (discountData = null));
+    }
+    userHelpers.placeOrder(req.body, products, totalPrice, address, user._id,discountData).then((orderId) => {
+      if (req.body['payment-method'] === 'COD') {
+        res.json({ codSuccess: true })
+      } else {
+        let netAmount = discountData ? discountData.amount : totalPrice;
+        userHelpers.generateRazorpay(orderId, netAmount).then((response) => {
+         
+          res.json(response)
+        })
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 
 
 
 // order success
-router.get('/order-success', (req, res,next) => {
- try {
-   res.render('user/order-success', { user: req.session.user, layout: 'user-layout' })
- } catch (error) {
-  next(error)
- }
+router.get('/order-success', (req, res, next) => {
+  try {
+    res.render('user/order-success', { user: req.session.user, layout: 'user-layout' })
+  } catch (error) {
+    next(error)
+  }
 })
 
 // Order
-router.get('/order', verifyLogin, async (req, res,next) => {
- try {
-   user = req.session.user
-   let orders = await userHelpers.getOrderProducts(req.session.user._id)
-   orderCount = orders.length
- 
-   let cartCount = await userHelpers.getCartCount(req.session.user._id)
-   let wishCount = await userHelpers.getWishCount(req.session.user._id)
-   res.render('user/order', { user, cartCount, wishCount, orders, layout: 'user-layout' })
- } catch (error) {
-  next(error)
- }
+router.get('/order', verifyLogin, async (req, res, next) => {
+  try {
+    user = req.session.user
+    let orders = await userHelpers.getOrderProducts(req.session.user._id)
+  
+    orderCount = orders.length
+    let cartCount = await userHelpers.getCartCount(req.session.user._id)
+    let wishCount = await userHelpers.getWishCount(req.session.user._id)
+    res.render('user/order', { user, cartCount, wishCount, orders, layout: 'user-layout' })
+  } catch (error) {
+    next(error)
+  }
 })
 
 // view order products details
-router.get('/view-order-products-details', verifyLogin, async (req, res,next) => {
- try {
-   user = req.session.user
-   let products = await userHelpers.getOrderProductsDetails(req.query.id, req.query.proId)
-  
-   let cartCount = await userHelpers.getCartCount(req.session.user._id)
-   let wishCount = await userHelpers.getWishCount(req.session.user._id)
-  
- 
-   res.render('user/view-order-products-details', { user, cartCount, wishCount, products, layout: 'user-layout' })
- } catch (error) {
-  next(error)
- }
+router.get('/view-order-products-details', verifyLogin, async (req, res, next) => {
+  try {
+    user = req.session.user
+    let products = await userHelpers.getOrderProductsDetails(req.query.id, req.query.proId)
+    
+
+    let cartCount = await userHelpers.getCartCount(req.session.user._id)
+    let wishCount = await userHelpers.getWishCount(req.session.user._id)
+
+
+    res.render('user/view-order-products-details', { user, cartCount, wishCount, products, layout: 'user-layout' })
+  } catch (error) {
+    next(error)
+  }
 })
 
 // verify payment
-router.post('/verify-payment', (req, res,next) => {
- try {
-   userHelpers.verifyPayment(req.body).then(() => {
-     userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
- 
-       console.log('payment successfull');
-       res.json({ status: true })
-     })
-   }).catch((err) => {
-     res.json({ status: false, errMsg: 'error' })
-   })
- } catch (error) {
-  next(error)
- }
+router.post('/verify-payment', (req, res, next) => {
+  try {
+    userHelpers.verifyPayment(req.body).then(() => {
+      userHelpers.changePaymentStatus(req.body['order[receipt]']).then(() => {
+
+      
+        res.json({ status: true })
+      })
+    }).catch((err) => {
+      res.json({ status: false, errMsg: 'error' })
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 
 
 // profile
-router.get('/profile', verifyLogin, async (req, res,next) => {
+router.get('/profile', verifyLogin, async (req, res, next) => {
 
- try {
-   let user = req.session.user
-   productHelpers.getSingleProduct(req.query.id).then(async (product) => {
- 
-     let products = await userHelpers.getOrderProducts(user._id)
-    
-     let orders = await userHelpers.getUserOrder(req.session.user._id)
-     let cartCount = await userHelpers.getCartCount(req.session.user._id)
-     let wishCount = await userHelpers.getWishCount(req.session.user._id)
-     let address = await userHelpers.getAddress(user._id)
-     orderCount = orders.length
-     res.render('user/profile', { profile: true, user: req.session.user, product, products, orders, orderCount, cartCount, wishCount, address, layout: 'user-layout' })
-   })
- } catch (error) {
-  next(error)
- }
+  try {
+    let user = req.session.user
+    productHelpers.getSingleProduct(req.query.id).then(async (product) => {
+
+      let products = await userHelpers.getOrderProducts(user._id)
+
+      let orders = await userHelpers.getUserOrder(req.session.user._id)
+      let cartCount = await userHelpers.getCartCount(req.session.user._id)
+      let wishCount = await userHelpers.getWishCount(req.session.user._id)
+      let address = await userHelpers.getAddress(user._id)
+      orderCount = orders.length
+      res.render('user/profile', { profile: true, user: req.session.user, product, products, orders, orderCount, cartCount, wishCount, address, layout: 'user-layout' })
+    })
+  } catch (error) {
+    next(error)
+  }
 })
+
+
+//post coupon
+router.post("/check-coupon", async (req, res,next) => {
+  try {
+
+   
+    let userId = req.session.user._id;
+    let couponCode = req.body.coupon;
+    let totalAmount = await userHelpers.getTotalAmount(userId);
+    
+    userHelpers.checkCoupon(couponCode, totalAmount).then((response) => {
+    
+        res.json(response);
+      })
+      .catch((response) => {
+        res.json(response);
+      });
+  } catch (error) {
+   next(error)
+  }
+ });
 
 
 

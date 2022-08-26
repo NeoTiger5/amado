@@ -3,7 +3,7 @@
         <div class="row mt-4">
             <a href=""></a>
         </div>
-        <table class="table table-hover mt-5">
+        <table class="table table-hover mt-5" id="usersTable">
             <h2> All Orders</h2>
             <thead>
                 <tr>
@@ -12,6 +12,8 @@
                     <th scope="col">Name</th>
 
                     <th scope="col">Shipping Address</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Discount</th>
                     <th scope="col">Total Amount</th>
                     <th scope="col">Payment</th>
                     <th scope="col">Status</th>
@@ -21,7 +23,7 @@
             <tbody>
                 {{#each orders}}
                 <tr>
-                    <td>{{@index}}</td>
+                    <td>{{inc @index}}</td>
                     <td>{{this.date}}</td>
                     <td>{{this.address.[0].shippingAddress.first_name}}</td>
                     <td>{{this.address.[0].shippingAddress.first_name}} <br>
@@ -29,6 +31,8 @@
                         
                     </td>
                     <td>₹ {{this.TotalAmount}}</td>
+                    <td>₹ {{this.discount}}</td>
+                    <td>₹ {{this.discountTotal}}</td>
                     <td>{{this.paymentMethod}}</td>
                     <td>{{this.status}}</td>
 
@@ -43,3 +47,18 @@
         </table>
     </div>
 </section>
+
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#usersTable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#usersTable').DataTable();
+</script>

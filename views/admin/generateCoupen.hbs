@@ -1,0 +1,30 @@
+<div class="container pt-4 px-4">
+    <div class="row g-4">
+
+        <div class="col-sm-12 ">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Add Coupon</h6>
+                <form action="/admin/generateCoupen" method="post"  class="form-horizontal">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" name="name" placeholder="NAME">
+                        <label for="floatingInput">Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingPassword" name="offer" nplaceholder="offer">
+                        <label for="floatingPassword">offer</label>
+                    </div>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingPassword" name="validity" nplaceholder="validity">
+                        <label for="floatingPassword">validity</label>
+                    </div>
+                   
+                     
+                    <button type="submit" class="btn btn-success">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,4 +1,50 @@
 {{#if wishCount}}
+<section>
+
+  <div class="container mt-5" id="reload-section">
+    <h2 style="font-family:apple-system,BlinkMacSystemFont," Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple
+      Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; font-size: 1rem;; padding-left:100PX;">WISHLIST</h2><br>
+    <div class="row">
+      {{#each wishProd}}
+      <div class="col-md-4-lg-6-xl-6-xxl-12 d-flex">
+
+        <div class="card " style=" width: 18rem;height: 30rem;margin: 30px;">
+
+          <img src="/product-image/{{this.product._id}}.jpg" style="height: 400px;" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{this.product.name}}</h5>
+            <p>₹ {{this.product.price}}</p>
+            <button onclick="addToCart('{{this.product._id}}')" name="addtocart" class="btn btn-success">Add to
+              cart</button>
+            <button onclick="remove('{{this._id}}','{{this.product._id}}')" class="btn btn-danger">Delete</button>
+          </div>
+
+        </div>
+
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+{{!--
+
+
+
+
+
+
+
+
+
+
 <div class="container " id="reload-section">
 
   <div class="name" style=" padding-top: 30px;">
@@ -15,8 +61,7 @@
         <p>₹ {{this.product.price}}</p>
         <button onclick="addToCart('{{this.product._id}}')" name="addtocart" class="btn btn-success">Add to
           cart</button>
-        <button onclick="remove('{{this._id}}','{{this.product._id}}')" 
-          class="btn btn-danger">Delete</button>
+        <button onclick="remove('{{this._id}}','{{this.product._id}}')" class="btn btn-danger">Delete</button>
       </div>
 
     </div>
@@ -25,14 +70,19 @@
 
 
   </div>
-</div>
+</div> --}}
 </div>
 {{else}}
-<img src="https://img.freepik.com/free-vector/empty-concept-illustration_114360-1188.jpg?w=740&t=st=1660582220~exp=1660582820~hmac=50d0320a509c53c596fcd90bbd220d563d0b87232aed7227514967acb4fe6fe1" alt="">
+<div>
+  <img style="height: 600px;"
+    src="https://img.freepik.com/free-vector/empty-concept-illustration_114360-1188.jpg?w=740&t=st=1660582220~exp=1660582820~hmac=50d0320a509c53c596fcd90bbd220d563d0b87232aed7227514967acb4fe6fe1"
+    alt="">
+
+</div>
 {{/if}}
 </div>
 <script>
-  function remove(wishId,productId) {
+  function remove(wishId, productId) {
     console.log(wishId)
     console.log(productId)
     $.ajax({

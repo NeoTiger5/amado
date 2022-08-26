@@ -6,31 +6,39 @@ module.exports = {
     dosms: (noData) => {
         let res = {}
         return new Promise(async (resolve, reject) => {
-            client.verify.services(serviceSid).verifications.create({
-                to: `+91${noData.mobile}`,
-                channel: "sms"
-            }).then(() => {
-                // res.valid = true;
-                resolve()
-                // console.log(res);
-            })
+            try {
+                client.verify.services(serviceSid).verifications.create({
+                    to: `+91${noData.mobile}`,
+                    channel: "sms"
+                }).then(() => {
+                    // res.valid = true;
+                    resolve()
+                    // console.log(res);
+                })
+            } catch (error) {
+                reject(error)
+            }
         })
     },
     otpVerify: (otpData, nuData) => {
         // let resp = {}
         return new Promise(async (resolve, reject) => {
-            let err="Enter a valid Otp"
-            client.verify.services(serviceSid).verificationChecks.create({
-                to: `+91${nuData.mobile}`,
-                code: otpData.otp
-            }).then((res) => {
-                if(res.valid){
-                    resolve()
-                }else{
-                    reject(err)
-                }
-                
-            })
+            try {
+                let err = "Enter a valid Otp"
+                client.verify.services(serviceSid).verificationChecks.create({
+                    to: `+91${nuData.mobile}`,
+                    code: otpData.otp
+                }).then((res) => {
+                    if (res.valid) {
+                        resolve()
+                    } else {
+                        reject(err)
+                    }
+
+                })
+            } catch (error) {
+                reject(error)
+            }
         })
     }
 

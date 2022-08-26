@@ -18,7 +18,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <input type="radio" name="address" value="{{this.shippingAddress.time}}"
-                                            aria-label="Radio button for following text input">
+                                            aria-label="Radio button for following text input" required>
                                     </div>
                                 </div>
                                 <input type="text" class="form-control" readonly
@@ -34,27 +34,53 @@
                     <div class="cart-summary">
                         <h5>Cart Total</h5>
                         <ul class="summary-table">
-                            <li><span>subtotal:</span> <span id="total">${{totalValue}}</span></li>
+                            <li><span>subtotal:</span> <span id="total">₹{{totalValue}}</span></li>
+                            <li><span>DISCOUNT:</span> <span id="totaldiscount">₹0</span></li>
                             <li><span>delivery:</span> <span>Free</span></li>
-                            <li><span>total:</span> <span>${{totalValue}}</span></li>
+                            <li><span>total:</span> <span id="totalPrice">₹{{totalValue}}</span></li>
+                            <div class="promotional-code-box">
+                                <h5 class="checkout-box-title">COUPON CODE</h5>
+                                <div class="pcb-content">
+                                    <p>Enter your coupon code if you have one</p>
+                                    <div class="pcb-cuppon-input clearfix">
+
+                                        <input type="text" placeholder="Coupon code" name="Coupon_Code" id="couponInput"
+                                            value="">
+                                        <div>
+                                            <span id="couponValid"></span>
+                                        </div>
+
+
+                                        <div class="cart-btn mt-50">
+                                            <a onclick="couponCheck(event)" href="" class="btn amado-btn w-50 h-20">APPLY</a>
+                                        </div>
+
+
+
+                                    </div><br>
+
+
+
+                                </div>
+                            </div>
                         </ul>
-                        <input type="text" value="{{user._id}}" hidden name="userId">
+                        <input type="text" value="{{user._id}}" hidden name="userId" required>
 
                         <div class="payment-method">
                             <!-- Cash on delivery -->
                             <div class="payment">
                                 <p>Payment method</p>
                                 <label class="radio-inline">
-                                    <input type="radio" name="payment-method" value="COD">Cash On Delivery
+                                    <input type="radio" name="payment-method" value="COD" required>Cash On Delivery
                                 </label>
                                 <br>
                                 <label class="radio-inline mt-2">
-                                    <input type="radio" name="payment-method" value="ONLINE">Online Payment
+                                    <input type="radio" name="payment-method" value="ONLINE" required>Online Payment
                                 </label>
                             </div>
                         </div>
 
-                        <div class="cart-btn mt-100">
+                        <div class="cart-btn mt-50">
                             <button class="btn amado-btn w-100" type="submit">CHECKOUT</button>
                         </div>
 
@@ -82,7 +108,7 @@
             method: 'post',
             data: $('#checkout-form').serialize(),
             success: (response) => {
-               
+
                 if (response.codSuccess) {
                     location.href = "/order-success"
                 } else {
@@ -94,7 +120,7 @@
     })
 
     function razorpayPayment(order) {
-       
+
         var options = {
             "key": "rzp_test_CfoXgcr9kkdbKe", // Enter the Key ID generated from the Dashboard
             "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -146,4 +172,41 @@
         })
 
     }
+
+
+
+    function couponCheck(e) {
+        let code = $('#couponInput').val()
+        
+        e.preventDefault()
+        $.ajax({
+            url: '/check-coupon',
+            data: {
+                coupon: code,
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    
+                    $('#couponValid').show()
+                    $('#couponValid').html('<i class="text-success fa-regular fa-circle-check"></i>  Valid Code')
+                    setTimeout(() => {
+                        $('#couponInput').prop('readonly', true)
+                        
+                    }, 10000)
+                    $('#totaldiscount').html(response.discount)
+                    console.log(response.discount)
+                    $('#totalPrice').html(response.amount)
+                } else {
+                    $('#couponValid').show()
+                    $('#couponValid').html('<i class="fa-solid text-danger fa-xmark"></i> Invalid Code')
+                    $("#discount").html(0)
+                    setTimeout(() => {
+                        $('#couponValid').hide()
+                    }, 3000)
+                }
+            }
+        })
+    }
+
 </script>

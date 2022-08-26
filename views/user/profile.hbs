@@ -2,8 +2,8 @@
 
 
     <div class="container mt-4">
-        <div class="row d-flex" >
-            {{!-- <div class="col-lg-12 my-lg-0 my-md-1"> --}}
+        <div class="row" >
+            <div class="col-lg-10 my-lg-0 my-md-1 ">
                 {{!-- <div id="sidebar" class="bg-purple">
                     <div class="h4 text-white">Account</div>
                     <ul>
@@ -63,18 +63,31 @@
                                 <div class="ms-auto number">{{wishCount}}</div>
                             </div>
                         </div>
-                         <div class="box me-4 my-1 bg-light">
-                            <img src="https://www.freepnglogos.com/uploads/lokasi-logo-png/hawker-united-church-christ-address-phone-number-33.png"
-                                alt="">
-                            <div class="d-flex align-items-center mt-2">
-                                <div class="tag">Address &nbsp</div>
-                                <div class="ms-auto number">{{wishCount}}</div>
-                            </div>
-                        </div>
+                        
                     </div>
-                    <div class="text-uppercase">My recent orders</div>
+                     <div class="buttons d-flex justify-content-between">
+                     <a href="/order"><button class="btn">ORDERS</button></a>
+                     <a href="/wishlist"><button class="btn">WISHLIST</button></a>
+                     <a href="/add-address"><button class="btn">ADD ADDRESS</button></a>
+                     
+                     </div><br><br>
 
-                    {{#each products}}
+                    <div>MY SAVED ADDRESS</div><br>
+                      {{#each address}}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="radio" name="address" value="{{this.shippingAddress.time}}"
+                                            aria-label="Radio button for following text input" required>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" readonly
+                                    value="{{this.shippingAddress.first_name}} {{this.shippingAddress.last_name}},{{this.shippingAddress.address}},{{this.shippingAddress.state}},{{this.shippingAddress.zipcode}}">
+                            </div>
+                            {{/each}}
+                    {{!-- <div class="text-uppercase">My recent orders</div> --}}
+
+                    {{!-- {{#each products}}
                  
 
                     <div class="order my-3 bg-light">
@@ -150,52 +163,16 @@
                         </div>
                     </div>
                     {{!-- {{/each}} --}}
-                    {{/each}}
+                    {{!-- {{/each}}  --}}
                     
-
-
-
+              
 
                    
 
                 </div>
                 
             </div>
-             <div class="order my-3 bg-light">
-                        <div class="text-uppercase">My Adresses</div>
-                        <div class="row">
-                            <div class="col-lg-4">
-
-                            </div>
-                            {{#if address}}
-                            {{#each address}}
-                            <div class="input-group">
-
-                                <div class="input-group-prepend">
-
-                                    <div class="input-group-text">
-
-                                        <input type="radio" name="address" value="{{this.shippingAddress.time}}"
-                                            aria-label="Radio button for following text input">
-
-                                    </div>
-
-                                </div>
-                                <input type="text" class="form-control" readonly
-                                    value="{{this.shippingAddress.first_name}} {{this.shippingAddress.last_name}},{{this.shippingAddress.address}},{{this.shippingAddress.state}},{{this.shippingAddress.zipcode}}">
-
-                            </div>
-                            {{/each}}
-                            {{else}}
-                            <p class="text-danger">Please add address</p>
-                            {{/if}}
-
-                        </div>
-                        <a class="addrss" href="/add-address">
-                            <button style=" border-radius: px cursor: pointer;   font-size: 16px;">ADD ADDRESS</button>
-                        </a>
-                    </div>
-        </div>
+            
 
     </div>
 

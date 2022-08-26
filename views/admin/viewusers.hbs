@@ -1,7 +1,7 @@
 <section>
   <div class="container">
     
-    <table class="table">
+    <table class="table" id="usersTable">
        <h2> All Users</h2>
       <thead>
         <tr>
@@ -9,25 +9,22 @@
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Mobile</th>
-          <th scope="col">Mobile</th>
+          <th scope="col">Options</th>
         </tr>
       </thead>
       {{#each users}}
       <tbody>
         <tr>
 
-          <th scope="row">{{@index}}</th>
+          <th scope="row">{{inc @index}}</th>
           <td>{{this.name}}</td>
           <td>{{this.email}}</td>
           <td>{{this.mobile}}</td>
-        
           <td>
 
             <a href="/admin/view-users-order?id={{this._id}}" class="btn btn-success">Orders</a>
             <a href="" class="btn btn-primary">Block</a>
              
-
-
           </td>
 
         </tr>
@@ -38,3 +35,18 @@
   </div>
 
 </section>
+
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#usersTable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#usersTable').DataTable();
+</script>

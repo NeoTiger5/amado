@@ -3,7 +3,7 @@
     <div class="row">
       <a href="/admin/addproducts" class="btn btn-success">Add Products</a>
     </div>
-    <table class="table">
+    <table class="table" id="usersTable">
       <thead>
         <tr>
           <th scope="col">No</th>
@@ -21,7 +21,7 @@
       <tbody>
         <tr>
 
-          <td scope="row">{{@index}}</td>
+          <td scope="row">{{inc @index}}</td>
           <td>{{this.name}}</td>
           <td>${{this.price}}</td>
           <td>{{this.category}}</td>
@@ -42,3 +42,17 @@
   </div>
 
 </section>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#usersTable').wrap('<div id="hide" style="display:none"/>');
+
+        $('#hide').css('display', 'block');
+    });
+
+
+    var table = $('#usersTable').DataTable();
+</script>

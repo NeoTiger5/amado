@@ -48,12 +48,14 @@
 
 <body>
 
-    {{!-- {{#if admin}} --}}
+    {{#if login}}
+     {{{body}}}
+    {{else}}
     {{>admin-header}}
+     {{{body}}}
 
-
-    {{!-- {{/if}} --}}
-    {{{body}}}
+    {{/if}}
+   
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

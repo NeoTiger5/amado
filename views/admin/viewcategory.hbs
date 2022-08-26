@@ -6,7 +6,7 @@
 
         <a href="/admin/addcategory" class="btn btn-success">Add Category</a>
 
-        <table class="table" id="categoryTable">
+        <table class="table" id="usersTable">
           <thead>
             <tr>
               <th scope="col">NO.</th>
@@ -18,7 +18,7 @@
           {{#each category}}
           <tbody>
             <tr>
-              <td scope="row">{{@index}}</td>
+              <td scope="row">{{inc @index}}</td>
               <td>{{this.category}}</td>
               <td>
                 <a href="/admin/editcategory/{{this._id}}" class="btn btn-primary">Edit</a>
@@ -42,17 +42,15 @@
 
  
 
-
 <script>
     $(document).ready(function () {
 
 
-        $('#categoryTable').wrap('<div id="hide" style="display:none"/>');
+        $('#usersTable').wrap('<div id="hide" style="display:none"/>');
 
         $('#hide').css('display', 'block');
     });
 
 
-    var table = $('#categoryTable').DataTable();
+    var table = $('#usersTable').DataTable();
 </script>
-

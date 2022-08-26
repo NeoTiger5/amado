@@ -8,6 +8,8 @@ var db = require('./config/connection')
 
 const nocache = require('nocache');
 const dotenv=require('dotenv')
+dotenv.config()
+
 
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
@@ -21,7 +23,7 @@ var fileUpload = require('express-fileupload')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.engine('hbs', hbs.engine({ extname: 'hbs', Layout: 'user-layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/Partials/' }))
+app.engine('hbs', hbs.engine({helpers:{inc:(value)=>{return parseInt(value)+1;}}, extname: 'hbs', Layout: 'user-layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/Partials/' }))
 
 app.use(logger('dev'));
 app.use(express.json());
