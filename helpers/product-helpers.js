@@ -42,6 +42,7 @@ module.exports = {
                 let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
                 resolve(products)
             } catch (error) {
+                
                 reject(error)
             }
         })
@@ -112,11 +113,14 @@ module.exports = {
 
     // get single product
     getSingleProduct: (productId) => {
+        
         return new Promise(async (resolve, reject) => {
             try {
                 let product = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({ _id: objectId(productId) })
+                
                 resolve(product)
             } catch (error) {
+                
                 reject(error)
             }
         })

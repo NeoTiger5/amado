@@ -1,27 +1,6 @@
-<!-- Search Wrapper Area Start -->
-
-<div class="search-wrapper section-padding-100 ">
-    <h1>hii</h1>
-    <div class="search-close">
-        <i class="fa fa-close" aria-hidden="true"></i>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="search-content">
-                    <form action="#" method="get">
-                        <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                        <button type="submit"><img src="/user/img/core-img/search.png" alt=""></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Search Wrapper Area End -->
 
 <!-- ##### Main Content Wrapper Start ##### -->
-<div class="main-content-wrapper d-flex clearfix">
+<div  class="main-content-wrapper d-flex clearfix " >
 
     <!-- Mobile Nav (max width 767px)-->
     <div class="mobile-nav">
@@ -36,7 +15,8 @@
     </div>
 
     <!-- Header Area Start -->
-    <header class="header-area clearfix">
+    <header  class="header-area clearfix" >
+        <img src="https://wallpapercave.com/vertical-wallpaper-hd " alt="">
         <!-- Close Icon -->
         <div class="nav-close">
             <i class="fa fa-close" aria-hidden="true"></i>
@@ -52,10 +32,12 @@
 
                 {{#if user}}
                 <li><a href="/shop">Shop</a></li>
-                <li><a href="/cart">Cart <span class="badge bg-secondary pt-1" id="cart-count">{{cartCount}}</span></a></li>
+                <li><a href="/cart">Cart <span class="badge bg-secondary pt-1" id="cart-count">{{cartCount}}</span></a>
+                </li>
                 <li><a href="/profile">{{user.name}}</a></li>
                 <li><a href="/order">Orders</a></li>
-                <li><a href="/wishlist">Wishlist <span class="badge bg-secondary pt-1" id="wish-count">{{wishCount}}</span></a></li>
+                <li><a href="/wishlist">Wishlist <span class="badge bg-secondary pt-1"
+                            id="wish-count">{{wishCount}}</span></a></li>
                 <li><a href="/signout">Sign out</a></li>
 
                 {{else}}
@@ -65,7 +47,7 @@
                 {{/if}}
             </ul>
         </nav>
-       
+
         <div class="social-info d-flex justify-content-between mt-5">
             <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
             <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>

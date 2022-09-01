@@ -15,18 +15,13 @@ module.exports = {
         if (admin) {
           bycrpt.compare(adminData.password, admin.password).then((status) => {
             if (status) {
-
               response.status = true
               resolve(response)
             } else {
-
               resolve({ status: false })
             }
-
           })
-
         } else {
-
           resolve({ status: false })
         }
       } catch (error) {
@@ -53,7 +48,7 @@ module.exports = {
               }
             }).then((response) => {
               resolve(response)
-  
+
             })
         } else if (data == 'Shipped') {
           db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectId(proId) },
@@ -68,7 +63,7 @@ module.exports = {
               }
             }).then((response) => {
               resolve(response)
-  
+
             })
         } else if (data == 'Delivered') {
           db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectId(proId) },
@@ -83,7 +78,7 @@ module.exports = {
               }
             }).then((response) => {
               resolve(response)
-  
+
             })
         } else if (data == 'Cancel') {
           db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectId(proId) },
@@ -98,7 +93,7 @@ module.exports = {
               }
             }).then((response) => {
               resolve(response)
-  
+
             })
         } else if (data == 'Pending') {
           db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectId(proId) },
@@ -113,7 +108,7 @@ module.exports = {
               }
             }).then((response) => {
               resolve(response)
-  
+
             })
         }
       } catch (error) {
@@ -260,11 +255,11 @@ module.exports = {
               resolve(response)
             })
           }
-  
+
         })
       } catch (error) {
         reject(error)
-        
+
       }
 
     })

@@ -1,5 +1,5 @@
-{{#if cartCount}}
 <div class="cart-table-area section-padding-50" id="reload-section">
+    {{#if cartCount}}
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -75,7 +75,9 @@
 </div>
 {{else}}
 <div>
-    <img style="height: 700px;" src="https://img.freepik.com/free-vector/add-cart-concept-illustration_114360-1435.jpg?w=740&t=st=1660581829~exp=1660582429~hmac=bb79daaaf4b463cf0fa32ba16d99de049678d99cb20a7b80706dc20b1e141c17" alt="">
+    <img style="height: 700px;"
+        src="https://img.freepik.com/free-vector/add-cart-concept-illustration_114360-1435.jpg?w=740&t=st=1660581829~exp=1660582429~hmac=bb79daaaf4b463cf0fa32ba16d99de049678d99cb20a7b80706dc20b1e141c17"
+        alt="">
 </div>
 {{/if}}
 </div>
@@ -111,7 +113,7 @@
             }
         })
     }
-    
+
     function remove(cartId, productId) {
 
         $.ajax({
@@ -122,13 +124,16 @@
             },
             method: 'post',
             success: (response) => {
-                location.reload()
+
                 Swal.fire(
                     'Good job!',
                     'Item removed from Cart!',
                     'success'
                 )
-                $('#reload-section').load(location.href + "#reload-section")
+                //location.reload()
+                $('#reload-section').load(location.href + " #reload-section")
+              
+
             },
         })
     }

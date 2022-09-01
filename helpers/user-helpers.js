@@ -263,7 +263,7 @@ module.exports = {
     },
     getAllOrders: () => {
         return new Promise(async (resolve, reject) => {
-            let orders = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+            let orders = await db.get().collection(collection.ORDER_COLLECTION).find().sort({date:-1}).toArray()
             resolve(orders)
         })
     },
@@ -319,6 +319,8 @@ module.exports = {
                         status: 1,
                         product: { $arrayElemAt: ['$product', 0] }
                     }
+                },{
+                    $sort:{'date':-1}
                 }
             ]).toArray()
 
@@ -472,7 +474,9 @@ module.exports = {
 
 
     generateRazorpay: (orderId, total) => {
-
+        console.log('hhhhh');
+        console.log(orderId);
+console.log(total);
         return new Promise((resolve, reject) => {
             try {
                 var options = {

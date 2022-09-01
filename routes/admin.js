@@ -6,8 +6,6 @@ const adminHelpers = require('../helpers/admin-helpers');
 const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/catagory-helpers');
-const { NetworkContext } = require('twilio/lib/rest/supersim/v1/network');
-const { response } = require('express');
 
 
 const verifyLogin = function (req, res, next) {
@@ -29,7 +27,7 @@ router.get('/', function (req, res, next) {
       let admin = req.session.admin
       res.redirect('/admin/index')
     } else {
-      res.render('admin/login', { layout: 'admin-layout',login:true });
+      res.render('admin/login', { layout: 'admin-layout', login: true });
     }
   } catch (error) {
     next(error)
@@ -59,10 +57,8 @@ router.get('/index', verifyLogin, async function (req, res, next) {
   try {
     let admin = req.session.logIn
 
-    
-    if (admin) {
 
-      
+    if (admin) {
       let delivery = {}
       delivery.pending = 'Pending'
       delivery.Placed = 'Placed'
@@ -107,15 +103,6 @@ router.get('/index', verifyLogin, async function (req, res, next) {
   }
 });
 
-
-//   if (req.session.logIn) {
-//     res.render('admin/index', { layout: 'admin-layout' })
-//   } else {
-//     res.redirect('/admin/index')
-//   }
-//  }catch(error){
-//   next(error)
-//  }
 
 // logout
 router.get('/logout', (req, res, next) => {
@@ -202,6 +189,7 @@ router.post('/editproducts/:id', (req, res, next) => {
         let image = req.files.image
         image.mv('./public/product-image/' + id + '.jpg')
       }
+      
     })
   } catch (error) {
     next(error)
@@ -291,10 +279,8 @@ router.get('/vieworders', (req, res, next) => {
   try {
     userHelpers.getAllOrders().then((orders) => {
       productHelpers.getAllUsers().then((users) => {
-
         res.render('admin/vieworders', { orders, users, layout: 'admin-layout' })
       })
-
     })
   } catch (error) {
     next(error)
@@ -303,8 +289,6 @@ router.get('/vieworders', (req, res, next) => {
 })
 
 // view-allOrder-all-user-products
-
-
 router.get('/view-allOrder-all-user-products', async (req, res, next) => {
   try {
     let products = await userHelpers.getAllOrderAllUserProducts(req.query.id, req.query.userId)
@@ -339,7 +323,6 @@ router.get('/view-users-order-details', async (req, res, next) => {
 router.get('/view-order-all-users', async (req, res, next) => {
   try {
     let products = await userHelpers.getOrderViewProducts(req.query.id, req.query.proId)
-
     res.render('admin/view-order-all-users', { products, layout: 'admin-layout' })
   } catch (error) {
     next(error)
@@ -362,9 +345,7 @@ router.get('/change-status', (req, res, next) => {
 // generate coupen
 router.get('/generateCoupen', (req, res, next) => {
   try {
-    
     res.render('admin/generateCoupen', { layout: 'admin-layout' })
-
   } catch (error) {
     next(error)
   }
@@ -374,7 +355,7 @@ router.get('/generateCoupen', (req, res, next) => {
 router.post('/generateCoupen', (req, res, next) => {
   try {
     adminHelpers.postGenerateCoupon(req.body).then((response) => {
-    res.redirect('/admin/generateCoupen')
+      res.redirect('/admin/generateCoupen')
     })
   } catch (error) {
     next(error)
@@ -383,13 +364,10 @@ router.post('/generateCoupen', (req, res, next) => {
 
 
 //  view coupen
-router.get('/viewCoupen', async(req, res, next) => {
+router.get('/viewCoupen', async (req, res, next) => {
   try {
-      let coupons = await adminHelpers.displayCoupons()
-     
-      res.render('admin/viewCoupen', { coupons,layout: 'admin-layout' })
-
-   
+    let coupons = await adminHelpers.displayCoupons()
+    res.render('admin/viewCoupen', { coupons, layout: 'admin-layout' })
   } catch (error) {
     next(error)
   }
